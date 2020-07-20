@@ -4,6 +4,7 @@ for i in `seq $1`
 do
     TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     ID=$(echo "raspbian ubuntucore arch debian ubuntu" | cut -d' ' -f$(shuf -i1-5 -n1))
+    STATUS=$(echo "accepted rejected pending" | cut -d' ' -f$(shuf -i1-3 -n1))
     PRETTY_NAME=$ID
     MACADDR=$(echo $FQDN$i|md5sum|sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02:\1:\2:\3:\4:\5/')
     NAME=$(echo $MACADDR| tr : -)
@@ -24,6 +25,7 @@ rm -f $PUBLIC_KEY_FILE
 JSON=`echo "{
   uid: '$UID_VALUE', 
   name:'$NAME',
+  status: '$STATUS',
   info: {
     id: '$ID',
     pretty_name: '$PRETTY_NAME',
